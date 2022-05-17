@@ -29,4 +29,4 @@ while(1):
 
     target_url = "http://traffic.daejeon.go.kr/map/trafficInfo/cctvCk.do?cctvId=CCTV02" #cctv영상 링크
     get_eminem_video_link(target_url)
-    time.sleep(150) # 대전 교통정보시스템 기준 2분30초마다 업데이트 , 타임슬립 150초 지
+    time.sleep(150) # 대전 교통정보시스템 기준 2분30초마다 업데이트 , 타임슬립 150초 지정
