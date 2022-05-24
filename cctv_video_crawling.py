@@ -35,9 +35,15 @@ def get_eminem_video_link(target_url):
 
 
 while(1):
+
     for i in range(11,51):
         num = str(i)
         target_url = "http://traffic.daejeon.go.kr/map/trafficInfo/cctvCk.do?cctvId=CCTV"+num #cctv영상 링크
         print(target_url)
         get_eminem_video_link(target_url)
     time.sleep(3600) # 대전 교통정보시스템 기준 2분30초마다 업데이트 , 타임슬립 1시간으로 지정 
+
+    target_url = "http://traffic.daejeon.go.kr/map/trafficInfo/cctvCk.do?cctvId=CCTV02" #cctv영상 링크
+    get_eminem_video_link(target_url)
+    time.sleep(150) # 대전 교통정보시스템 기준 2분30초마다 업데이트 , 타임슬립 150초 지정
+
