@@ -1,0 +1,180 @@
+@charset "EUC-KR";
+
+/* * {
+  box-sizing: border-box;
+  outline: 1px solid limegreen !important;
+}*/
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	margin: 0px;
+	padding: 0px;
+	width:  100%;
+     height: 100%;
+}
+
+h1 {
+	color: black;
+	margin: 0;
+}
+
+h3 {
+	padding: 10px 14px 10px 14px;
+	margin: 0;
+	text-align:center;
+}
+
+.article-header {
+	text-align: center;
+	background-color: white;
+	padding: 10px;
+	position: relative;
+	width: 100%;
+}
+
+.menu_container {
+	background-color: gray;
+	height: 120px;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+.banner {
+	text-align: center;
+	width: 38%;
+	float: left;
+	box-sizing: border-box;
+	height: 100%;
+	line-height: 120px;
+}
+
+.logo {
+	height: 100%;
+	width: 20%;
+	float: left;
+}
+
+.img-concert {
+	width: 100%;
+	height: 100%;
+}
+
+.main_function_container {
+	margin-top: 30px;
+	padding: 10px;
+	width: 100%;
+	height: 600px;
+	float: left;
+	/*border: 1px solid black;*/
+	position: relative;
+}
+
+.left_menu_container {
+	width: 10%;
+	height: 100%;
+	/*border:1px solid red;*/
+	float: left;
+	
+}
+
+.right_menu_container {
+	width: 10%;
+	height: 100%;
+	/*border:1px solid red;*/
+	float: right;
+	
+}
+
+/*.video_container {
+	
+	border : 1px solid blue;
+	float: left;
+	margin-left: 10px;
+	margin-right:10px;
+	position:absolute;
+	width:100%;
+	height:100%;
+
+}*/
+.line_container {
+	
+	/*border : 1px solid blue;*/
+	float: left;
+	margin-left: 10px;
+	margin-right:10px;
+	position:absolute;
+	width:1200px;
+	height:580px;
+	z-index: 10;
+    /*background-color:rgba(30, 20, 0, 0.5);*/
+}
+
+.coordinate{
+	
+	width:300px;
+	height:20px;
+	float:left;
+	margin-left:120px;
+	
+	
+}
+
+ol, ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+aside #topic_list_index nav a {
+	background-color: #fff !important;
+	color: #999 !important;
+	padding: 10px 14px !important;
+}
+
+.label {
+	margin-bottom: 10px;
+}
+
+.btn {
+	margin: 0;
+	padding: 0.5rem 1rem;
+	font-family: "Noto Sans KR", sans-serif;
+	font-size: 1rem;
+	font-weight: 400;
+	text-align: center;
+	text-decoration: none;
+	border: none;
+	display: inline-block;
+	width: 140px;
+	border-radius: 4px;
+}
+
+.btn:hover {
+	border: 2px solid black;
+}
+
+a {
+	text-decoration-line: none;
+}
+
+video {
+	/*position: absolute;
+	width: 0;
+	height: 0;*/
+	float: left;
+	margin-left: 10px;
+	margin-right:10px;
+	position:absolute;
+	width:1200px;
+	height:580px;
+	object-fit:fill;
+	pointer-events: none;
+}
+

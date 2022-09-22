@@ -1,0 +1,19 @@
+@charset "UTF-8"; /* 기본 설정: 페이지 전체 */ * 
+{ margin: 0; padding: 0; } 
+
+
+
+.footer_container 
+{
+	
+	height: 120px;
+	width: 100%;
+	bottom:0px;
+	position:absolute;
+	display: block; cursor: default; 
+	color: rgba(255, 255, 255, 1); background-color: rgba(25, 25, 25, 1);
+
+ } 
+ 
+ 
+.footer_container .footB { line-height : 120px; font-size: 25px; text-align: center;}

@@ -1,0 +1,68 @@
+@charset "UTF-8";
+body {
+
+  font-size: 100%;
+}
+
+.container {
+  padding: 3em;
+}
+
+/* GENERAL BUTTON STYLING */
+button,
+button::after {
+  -webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+button {
+  background: none;
+  border: 3px solid #fff;
+  border-radius: 5px;
+  color: black;
+  display: block;
+  font-size: 1.6em;
+  font-weight: bold;
+  margin: 1em auto;
+  padding: 2em 6em;
+  position: relative;
+  text-transform: uppercase;
+}
+
+button::before,
+button::after {
+  background: white;
+  content: '';
+  position: absolute;
+  z-index: -1;
+}
+
+button:hover {
+  color: orange;
+}
+
+/* BUTTON 1 */
+.btn-1::after {
+  height: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.btn-1:hover:after {
+  height: 100%;
+}
+
+/* BUTTON 2 */
+.btn-2::after {
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 0;
+}
+
+.btn-2:hover:after {
+  width: 100%;
+}
