@@ -1,5 +1,4 @@
 # 선이 그어진 버드아이뷰 영상을 저장
-# 강규 전달
 
 import cv2
 import numpy as np
