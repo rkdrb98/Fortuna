@@ -20,47 +20,10 @@ def gaussian_blur(img, kernel_size):  # 가우시안 필터
     return cv2.GaussianBlur(img, (kernel_size, kernel_size), 0)
 
 
-def region_of_interest(img, vertices, color3=(255, 255, 255), color1=255):  # ROI 셋팅
-
-    mask = np.zeros_like(img)  # mask = img와 같은 크기의 빈 이미지
-
-    if len(img.shape) > 2:  # Color 이미지(3채널)라면 :
-        color = color3
-    else:  # 흑백 이미지(1채널)라면 :
-        color = color1
-
-    # vertices에 정한 점들로 이뤄진 다각형부분(ROI 설정부분)을 color로 채움
-    cv2.fillPoly(mask, vertices, color)
-
-    # 이미지와 color로 채워진 ROI를 합침
-    ROI_image = cv2.bitwise_and(img, mask)
-    return ROI_image
-
-
-def draw_lines(img, lines, color=[0, 0, 255], thickness=2):  # 선 그리기
+def draw_lines(img, lines, color=[0, 0, 255], thickness=10):  # 선 그리기
     for line in lines:
         for x1, y1, x2, y2 in line:
             cv2.line(img, (x1, y1), (x2, y2), color, thickness)
-
-
-# def hough_to(img, lines):
-#     for line in lines:
-#         for rho, theta in line:
-#             a = np.cos(theta)
-#             b = np.sin(theta)
-#             x0 = a * rho
-#             y0 = b * rho
-#             x1 = int(x0 + 1000 * (-b))
-#             y1 = int(y0 + 1000 * (a))
-#             x2 = int(x0 - 1000 * (-b))
-#             y2 = int(y0 - 1000 * (a))
-#
-#             # hough_transe.extend([][][x1,y1,x2,y2])
-#             cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
-
-
-def draw_fit_line(img, lines, color=[255, 0, 0], thickness=10):  # 대표선 그리기
-    cv2.line(img, (lines[0], lines[1]), (lines[2], lines[3]), color, thickness)
 
 
 def hough_lines(img, rho, theta, threshold):  # 허프 변환 , min_line_len, max_line_gap
@@ -80,14 +43,6 @@ def hough_lines(img, rho, theta, threshold):  # 허프 변환 , min_line_len, max_li
     # HoughLines - 직선 출력, 직선방정식을 구해 그릴 수 있음, 길이 무한대
     # HoughLinesP - 선분 출력, 좌표값을 출력, 선의 최소 길이나 점 사이의 최대 간격 설정 필요
 
-    # line_img = np.zeros((img.shape[0], img.shape[1], 3), dtype=np.uint8)
-    # draw_lines(line_img, lines)
-
-    # print("lines1: ", lines)
-    #print("lines.shape", lines.shape)
-    #print("lines.ndim", lines.ndim)
-
-
     for line in lines:
         for rho, theta in line:
             a = np.cos(theta)
@@ -104,38 +59,11 @@ def hough_lines(img, rho, theta, threshold):  # 허프 변환 , min_line_len, max_li
             coo = np.array([[x1,y1,x2,y2]])
             houghLine = np.append(houghLine, coo, axis=0)
 
-    #         lines[line] = [[x1,y1][x2,y2]]
-
-    # print("lines2: ", houghLine)
-    # [[[x1,y1]
-
     return houghLine
-    #return lines
 
 
 def weighted_img(img, initial_img, α=1, β=1., λ=0.):  # 두 이미지 operlap 하기
     return cv2.addWeighted(initial_img, α, img, β, λ)
-
-
-def get_fitline(img, f_lines):  # 대표선 구하기
-    lines = np.squeeze(f_lines)
-    lines = lines.reshape(lines.shape[0] * 2, 2)
-    rows, cols = img.shape[:2]
-    # cv2.fitLine - 주어진 점에 적합하 직선을 반환
-    # fitLine(points, distType, param, reps, aeps, line)
-    # distType: 거리 계산 방식 (cv2.DIST_L2, cv2.DIST_L1, cv2.DIST_L12, cv2.DIST_FAIR, cv2.DIST_WELSCH, cv2.DIST_HUBER)
-    # param: distType에 전달할 인자, 0 = 최적 값 선택
-    # reps: 반지름 정확도, 선과 원본 좌표의 거리, 0.01 권장
-    # aeps: 각도 정확도, 0.01 권장
-    # line(optional): vx, vy 정규화된 단위 벡터, x0, y0: 중심점 좌표
-
-    output = cv2.fitLine(lines, cv2.DIST_L2, 0, 0.01, 0.01)
-    vx, vy, x, y = output[0], output[1], output[2], output[3]
-    x1, y1 = int(((img.shape[0] - 1) - y) / vy * vx + x), img.shape[0] - 1
-    x2, y2 = int(((img.shape[0] / 2 + 100) - y) / vy * vx + x), int(img.shape[0] / 2 + 100)
-
-    result = [x1, y1, x2, y2]
-    return result
 
 
 image = cv2.imread('../image/video_2_BEV.jpg')  # 이미지 읽기
@@ -167,13 +95,32 @@ verticality = 85  # default: 95
 line_arr = line_arr[np.abs(slope_degree) > verticality]
 slope_degree = slope_degree[np.abs(slope_degree) > verticality]
 
-print("slope", slope_degree)
-print("slope", slope_degree>-20)
 # 필터링된 직선 버리기
-# L_lines, R_lines = line_arr[(slope_degree>0),:], line_arr[(slope_degree<0),:]
-lines = line_arr[(slope_degree>-20),:]
-# 현재는 수직에 가까운 중앙선 검출을 위한 값을 입력 해놓은 상태
+average = sum(slope_degree)
+line_average = average/len(slope_degree)
+print(line_average)
 
+if line_average <= 0:
+    arr = line_arr[(slope_degree>line_average),:]
+    print(">")
+else:
+    arr = line_arr[(slope_degree<line_average),:]
+    print("<")
+
+arr = arr[arr[:, 0].argsort()]  # 중복되는 선들을 제거해주기 위해 x1을 기준으로 정렬
+
+# 선의 간격이 50이 넘지 않으면 삭제
+x1 = arr[0][0]
+lines = arr[:]
+num = 1
+for line in arr[1:,0]:
+    if x1+50 < line:
+        x1 = line
+        num += 1
+        # print(line)
+    else:
+        lines = np.delete(lines,num,axis=0)
+        # print("2: ", lines)
 
 temp = np.zeros((image.shape[0], image.shape[1], 3), dtype=np.uint8)
 lines = lines[:,None]
@@ -184,6 +131,4 @@ result = weighted_img(temp, image)  # 원본 이미지에 검출된 선 overlap
 
 cv2.imshow('canny', canny_img)
 cv2.imshow('result', result)  # 결과 이미지 출력
-# result = weighted_img(line_arr, image)
-# cv2.imshow('result', result)
 cv2.waitKey(0)
